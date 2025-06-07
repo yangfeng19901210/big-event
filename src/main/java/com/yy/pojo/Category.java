@@ -1,11 +1,52 @@
 package com.yy.pojo;
-import com.yy.common.entity.BaseEntity;
+
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import java.util.Date;
 import lombok.Data;
 
+/**
+ * 
+ * @TableName category
+ */
+@TableName(value ="category")
 @Data
-public class Category extends BaseEntity {
-    private Integer id;//主键ID
-    private String categoryName;//分类名称
-    private String categoryAlias;//分类别名
-    private Integer createUser;//创建人ID
+public class Category {
+    /**
+     * ID
+     */
+    @TableId(type = IdType.AUTO)
+    private Integer id;
+
+    /**
+     * 分类名称
+     */
+    private String categoryName;
+
+    /**
+     * 分类别名
+     */
+    private String categoryAlias;
+
+    /**
+     * 创建人ID
+     */
+    private Integer createUser;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    /**
+     * 是否删除表示1-未删除0-已删除
+     */
+    private Integer delFlag;
 }

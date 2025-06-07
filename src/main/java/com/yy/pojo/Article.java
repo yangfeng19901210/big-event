@@ -1,21 +1,67 @@
 package com.yy.pojo;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.yy.common.entity.BaseEntity;
+import java.util.Date;
 import lombok.Data;
 
+/**
+ * 
+ * @TableName article
+ */
+@TableName(value ="article")
 @Data
-@TableName("article")
-public class Article extends BaseEntity {
+public class Article {
+    /**
+     * ID
+     */
     @TableId(type = IdType.AUTO)
-    private Integer id;//主键ID
-    private String title;//文章标题
-    private String content;//文章内容
-    private String coverImg;//封面图像
-    private String state;//发布状态 已发布|草稿
-    private Integer categoryId;//文章分类id
+    private Integer id;
 
+    /**
+     * 文章标题
+     */
+    private String title;
+
+    /**
+     * 文章内容
+     */
+    private String content;
+
+    /**
+     * 文章封面
+     */
+    private String coverImg;
+
+    /**
+     * 文章状态: 只能是[已发布] 或者 [草稿]
+     */
+    private String state;
+
+    /**
+     * 文章分类ID
+     */
+    private Integer categoryId;
+
+    /**
+     * 创建人ID
+     */
+    private Integer createUser;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 修改时间
+     */
+    private Date updateTime;
+
+    /**
+     * 是否删除表示1-未删除0-已删除
+     */
+    private Integer delFlag;
 }
