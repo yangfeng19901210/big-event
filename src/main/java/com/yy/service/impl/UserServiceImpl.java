@@ -1,5 +1,6 @@
 package com.yy.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yy.mapper.UserMapper;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     private UserMapper userMapper;
     @Override

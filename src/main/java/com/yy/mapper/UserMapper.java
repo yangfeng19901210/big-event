@@ -1,5 +1,6 @@
 package com.yy.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.yy.pojo.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import java.time.LocalDateTime;
 
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     @Select("select * from user where username=#{userName}")
     User getByUserName(String userName);
     @Insert("insert into user(username,password,create_time,update_time)" +

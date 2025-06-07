@@ -1,11 +1,16 @@
 package com.yy.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.yy.common.entity.BaseEntity;
 import lombok.Data;
 
 @Data
+@TableName("article")
 public class Article extends BaseEntity {
+    @TableId(type = IdType.AUTO)
     private Integer id;//主键ID
     private String title;//文章标题
     private String content;//文章内容

@@ -1,8 +1,9 @@
 package com.yy.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.yy.pojo.User;
 
-public interface UserService {
+public interface UserService extends IService<User> {
     /**
     * @Description 用户注册
     * @Author yangfeng
