@@ -1,4 +1,4 @@
-package com.yy.pojo;
+package com.yy.common.response;
 
 
 import lombok.AllArgsConstructor;

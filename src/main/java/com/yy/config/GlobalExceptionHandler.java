@@ -1,5 +1,7 @@
-package com.yy.exception;
-import com.yy.pojo.Result;
+package com.yy.config;
+import com.yy.common.response.Result;
+import com.yy.exception.BaseException;
+import com.yy.exception.BusinessException;
 import io.gitee.loulan_yxq.owner.core.exception.AssertException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +14,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
     /**
      * 处理断言异常，并返回数据
-     *
      * @param
      * @return
      * @throws
      * @author :loulan
      */
-    @ExceptionHandler({IllegalArgumentException.class, AssertException.class,BusinessException.class, BaseException.class})
+    @ExceptionHandler({IllegalArgumentException.class, AssertException.class, BusinessException.class, BaseException.class})
     public Result handlerAssertException(Exception ex) {
         log.error("发生业务异常", ex);
         return Result.error(ex.getMessage());
