@@ -2,6 +2,7 @@ package com.yy.common;
 
 import com.alibaba.ttl.TransmittableThreadLocal;
 import com.yy.config.BaseConstant;
+import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,6 +38,25 @@ public class BaseStorage {
             threadLocal.set(map);
         }
         return map.get(key);
+    }
+    public static void pushUserId(Integer userId) {
+        push(BaseConstant.USER_ID, ObjectTool.isNotNull(userId) ? String.valueOf(userId) : null);
+    }
+
+    public static Integer getUserId() {
+        String userId = get(BaseConstant.USER_ID);
+        if (ObjectTool.isNull(userId)) {
+            return null;
+        } else {
+            return Integer.valueOf(userId);
+        }
+    }
+    public static void pushUsername(String username) {
+        push(BaseConstant.USERNAME, username);
+    }
+
+    public static String getUsername() {
+        return get(BaseConstant.USERNAME);
     }
     public static void remove() {
         threadLocal.remove();

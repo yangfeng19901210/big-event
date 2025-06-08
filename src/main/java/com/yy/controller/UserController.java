@@ -1,6 +1,7 @@
 package com.yy.controller;
 
 import com.yy.common.response.Result;
+import com.yy.config.BaseConstant;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
@@ -55,8 +56,8 @@ public class UserController {
         if (Md5Util.getMD5String(password).equals(loginUser.getPassword())) {
             //登录成功
             Map<String, Object> claims = new HashMap<>();
-            claims.put("id", loginUser.getId());
-            claims.put("username", loginUser.getUsername());
+            claims.put(BaseConstant.USER_ID, loginUser.getId());
+            claims.put(BaseConstant.USERNAME, loginUser.getUsername());
             String token = JwtUtil.genToken(claims);
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();

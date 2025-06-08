@@ -32,12 +32,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                 throw new RuntimeException();
             }
             Map<String, Object> claims = JwtUtil.parseToken(token);
+            Integer userId = (Integer) claims.get(BaseConstant.USER_ID);
+            String userName = (String) claims.get(BaseConstant.USERNAME);
             //将用户id和用户名放入本地线程
-            BaseStorage.push(BaseConstant.USER_ID,claims.get(BaseConstant.USER_ID).toString());
-            BaseStorage.push(BaseConstant.USERNAME,claims.get(BaseConstant.USERNAME).toString());
-            //把业务数据存储到ThreadLocal中
-//            ThreadLocalUtil.set(claims);
-            //放行
+            BaseStorage.pushUserId(userId);
+            BaseStorage.pushUsername(userName);
             return true;
         } catch (Exception e) {
             //http响应状态码为401
