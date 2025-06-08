@@ -1,5 +1,6 @@
 package com.yy.config;
 import com.yy.common.response.Result;
+import com.yy.exception.AuthException;
 import com.yy.exception.BaseException;
 import com.yy.exception.BusinessException;
 import io.gitee.loulan_yxq.owner.core.exception.AssertException;
@@ -28,6 +29,11 @@ public class GlobalExceptionHandler {
     public Result handlerException(ConstraintViolationException ex) {
         log.error("发生异常", ex);
         return Result.error(ex.getMessage());
+    }
+    @ExceptionHandler(AuthException.class)
+    public Result handlerException(AuthException ex) {
+        log.error("发生异常", ex);
+        return Result.error(401,ex.getMessage());
     }
     @ExceptionHandler(Exception.class)
     public Result handleException(Exception e){
