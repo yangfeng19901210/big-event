@@ -1,8 +1,5 @@
 package com.yy.utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * ThreadLocal 工具类
  */

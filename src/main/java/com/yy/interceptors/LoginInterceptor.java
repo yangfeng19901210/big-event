@@ -1,4 +1,6 @@
 package com.yy.interceptors;
+import com.yy.common.BaseStorage;
+import com.yy.config.BaseConstant;
 import com.yy.exception.AuthException;
 import com.yy.utils.JwtUtil;
 import com.yy.utils.ThreadLocalUtil;
@@ -30,9 +32,11 @@ public class LoginInterceptor implements HandlerInterceptor {
                 throw new RuntimeException();
             }
             Map<String, Object> claims = JwtUtil.parseToken(token);
-
+            //将用户id和用户名放入本地线程
+            BaseStorage.push(BaseConstant.USER_ID,claims.get(BaseConstant.USER_ID).toString());
+            BaseStorage.push(BaseConstant.USERNAME,claims.get(BaseConstant.USERNAME).toString());
             //把业务数据存储到ThreadLocal中
-            ThreadLocalUtil.set(claims);
+//            ThreadLocalUtil.set(claims);
             //放行
             return true;
         } catch (Exception e) {
@@ -45,6 +49,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         //清空ThreadLocal中的数据
-        ThreadLocalUtil.remove();
+//        ThreadLocalUtil.remove();
+        BaseStorage.remove();
     }
 }
