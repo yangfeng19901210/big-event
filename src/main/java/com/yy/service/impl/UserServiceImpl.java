@@ -5,6 +5,8 @@ import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.mapper.UserMapper;
 import com.yy.utils.Md5Util;
+import com.yy.vo.in.UpUserInVO;
+import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,12 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     @Override
     public User getByUserName(String userName) {
         return userMapper.getByUserName(userName);
+    }
+
+    @Override
+    public Boolean updateUserInfo(UpUserInVO vo) {
+        User user = BeanTool.copy(vo, User.class);
+        return updateById(user);
     }
 
 }

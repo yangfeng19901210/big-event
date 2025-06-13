@@ -2,6 +2,7 @@ package com.yy.service;
 
 import com.yy.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yy.vo.in.UpUserInVO;
 
 /**
 * @author yangFeng
@@ -27,5 +28,12 @@ public interface UserService extends IService<User> {
      * @Return com.yy.pojo.User
      */
     User getByUserName(String userName);
-
+    /**
+    * @description 更新用户基本信息
+    * @author yangFeng
+    * @date 2025/6/13 21:41
+    * @param vo
+    * @return java.lang.Boolean
+    */
+    Boolean updateUserInfo(UpUserInVO vo);
 }

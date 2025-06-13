@@ -1,20 +1,20 @@
 package com.yy.controller;
 
+import com.yy.common.BaseStorage;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
 import com.yy.utils.Md5Util;
+import com.yy.vo.in.UpUserInVO;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,5 +65,28 @@ public class UserController {
             return token;
         }
         return "密码错误";
+    }
+    /**
+    * @description 获取当前登录用户的详细信息
+    * @author yangFeng
+    * @date 2025/6/13 21:32
+    * @param
+    * @return com.yy.pojo.User
+    */
+    @GetMapping("/userInfo")
+    public User getUserInfo(){
+        Integer userId = BaseStorage.getUserId();
+        return userService.getById(userId);
+    }
+    /**
+    * @description 更新用户信息
+    * @author yangFeng
+    * @date 2025/6/13 21:43
+    * @param vo
+    * @return java.lang.Boolean
+    */
+    @PutMapping("/update")
+    public Boolean update(@RequestBody UpUserInVO vo){
+        return userService.updateUserInfo(vo);
     }
 }
