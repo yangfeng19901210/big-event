@@ -40,6 +40,7 @@ public class UserController {
     }
     /**
     * @description 用户登录
+     * username：dsk001 password：dsk1688..
     * @author yangfeng
     * @date 2025/6/7 12:15
     * @param username

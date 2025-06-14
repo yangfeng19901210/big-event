@@ -5,6 +5,9 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.yy.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -13,7 +16,7 @@ import lombok.Data;
  */
 @TableName(value ="user")
 @Data
-public class User {
+public class User extends BaseEntity {
     /**
      * ID
      */
@@ -28,6 +31,7 @@ public class User {
     /**
      * 密码
      */
+    @JsonIgnore
     private String password;
 
     /**
@@ -44,19 +48,4 @@ public class User {
      * 头像
      */
     private String userPic;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除表示1-未删除0-已删除
-     */
-    private Integer delFlag;
 }
