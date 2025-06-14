@@ -40,7 +40,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         } catch (Exception e) {
             //http响应状态码为401
-            throw new AuthException("用户未登录");
+            throw new AuthException("用户未登录",e);
             //不放行
         }
     }

@@ -1,5 +1,9 @@
 package com.yy.vo.in;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -13,6 +17,7 @@ import java.io.Serializable;
  */
 @Data
 public class UpUserInVO implements Serializable {
+    @NotNull(message = "id不可为空")
     private Integer id;
 
     /**
@@ -23,10 +28,14 @@ public class UpUserInVO implements Serializable {
     /**
      * 昵称
      */
+    @NotEmpty(message = "昵称不可为空")
+    @Pattern(regexp = "^\\S{1,10}$")
     private String nickname;
 
     /**
      * 邮箱
      */
+    @NotEmpty(message = "邮箱不可为空")
+    @Email
     private String email;
 }

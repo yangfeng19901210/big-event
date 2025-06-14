@@ -7,8 +7,13 @@ import io.gitee.loulan_yxq.owner.core.exception.AssertException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestControllerAdvice
 @Slf4j
@@ -24,6 +29,16 @@ public class GlobalExceptionHandler {
     public Result handlerCommonException(Exception ex) {
         log.error("发生业务异常", ex);
         return Result.error(ex.getMessage());
+    }
+    // 处理请求体校验异常
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result handleValidationException(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+//        ex.getBindingResult().getFieldErrors().forEach(error ->
+//                errors.put(error.getField(), error.getDefaultMessage()));
+        log.error("参数校验异常", ex);
+        String message = ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        return Result.error(message);
     }
     /**
     * @description 处理参数校验异常

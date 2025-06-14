@@ -62,7 +62,7 @@ public class UserController {
             String token = JwtUtil.genToken(claims);
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
-            operations.set(token,token,1, TimeUnit.HOURS);
+            operations.set(token,token,24*10, TimeUnit.HOURS);
             return token;
         }
         return "密码错误";
@@ -87,7 +87,7 @@ public class UserController {
     * @return java.lang.Boolean
     */
     @PutMapping("/update")
-    public Boolean update(@RequestBody UpUserInVO vo){
+    public Boolean update(@RequestBody @Validated UpUserInVO vo){
         return userService.updateUserInfo(vo);
     }
 }
