@@ -11,6 +11,7 @@ import com.yy.vo.in.UpUserInVO;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.validation.annotation.Validated;
@@ -89,5 +90,16 @@ public class UserController {
     @PutMapping("/update")
     public Boolean update(@RequestBody @Validated UpUserInVO vo){
         return userService.updateUserInfo(vo);
+    }
+    /**
+    * @description 更新用户头像
+    * @author yangFeng
+    * @date 2025/6/14 12:32
+    * @param avatarUrl
+    * @return java.lang.Boolean
+    */
+    @PatchMapping("updateAvatar")
+    public Boolean updateAvatar(@RequestParam @URL String avatarUrl) {
+        return userService.updateAvatar(avatarUrl);
     }
 }

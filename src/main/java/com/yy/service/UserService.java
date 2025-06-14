@@ -3,6 +3,7 @@ package com.yy.service;
 import com.yy.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yy.vo.in.UpUserInVO;
+import org.hibernate.validator.constraints.URL;
 
 /**
 * @author yangFeng
@@ -36,4 +37,12 @@ public interface UserService extends IService<User> {
     * @return java.lang.Boolean
     */
     Boolean updateUserInfo(UpUserInVO vo);
+    /**
+    * @description 更新当前用户头像
+    * @author yangFeng
+    * @date 2025/6/14 12:09
+    * @param avatarUrl
+    * @return java.lang.Boolean
+    */
+    Boolean updateAvatar(@URL String avatarUrl);
 }

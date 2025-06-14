@@ -1,6 +1,7 @@
 package com.yy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yy.common.BaseStorage;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.mapper.UserMapper;
@@ -50,6 +51,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Boolean updateUserInfo(UpUserInVO vo) {
         User user = BeanTool.copy(vo, User.class);
         return updateById(user);
+    }
+
+    @Override
+    public Boolean updateAvatar(String avatarUrl) {
+        User u = new User();
+        u.setId(BaseStorage.getUserId());
+        u.setUserPic(avatarUrl);
+        return updateById(u);
     }
 
 }
