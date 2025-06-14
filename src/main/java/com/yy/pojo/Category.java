@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
+
+import com.yy.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -13,7 +15,7 @@ import lombok.Data;
  */
 @TableName(value ="category")
 @Data
-public class Category {
+public class Category extends BaseEntity {
     /**
      * ID
      */
@@ -34,19 +36,4 @@ public class Category {
      * 创建人ID
      */
     private Integer createUser;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 是否删除表示1-未删除0-已删除
-     */
-    private Integer delFlag;
 }
