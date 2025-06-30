@@ -3,11 +3,13 @@ package com.yy.controller;
 import com.yy.common.BaseStorage;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;
+import com.yy.exception.BusinessException;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
 import com.yy.utils.Md5Util;
 import com.yy.vo.in.UpUserInVO;
+import com.yy.vo.in.UpdatePwdInVO;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
@@ -31,13 +33,13 @@ public class UserController {
     private final StringRedisTemplate stringRedisTemplate;
     /**
      * 用户注册
-     * @param userName
+     * @param username
      * @param password
      * @return
      */
     @PostMapping("/register")
-    public Result register(@Pattern(regexp = "^\\S{5,16}$",message = "用户名不合法")String userName, @Pattern(regexp = "^\\S{5,16}$",message = "密码不合法")String password) {
-        return Result.success(userService.register(userName,password));
+    public Result register(@Pattern(regexp = "^\\S{5,16}$",message = "用户名不合法")String username, @Pattern(regexp = "^\\S{5,16}$",message = "密码不合法")String password) {
+        return Result.success(userService.register(username,password));
     }
     /**
     * @description 用户登录
@@ -55,18 +57,18 @@ public class UserController {
         //判断该用户是否存在
         AssertTool.notNull(loginUser,"用户名错误");
         //判断密码是否正确  loginUser对象中的password是密文
-        if (Md5Util.getMD5String(password).equals(loginUser.getPassword())) {
-            //登录成功
-            Map<String, Object> claims = new HashMap<>();
-            claims.put(BaseConstant.USER_ID, loginUser.getId());
-            claims.put(BaseConstant.USERNAME, loginUser.getUsername());
-            String token = JwtUtil.genToken(claims);
-            //把token存储到redis中
-            ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
-            operations.set(token,token,24*10, TimeUnit.HOURS);
-            return token;
+        if (!Md5Util.getMD5String(password).equals(loginUser.getPassword())) {
+            throw new BusinessException("密码错误");
         }
-        return "密码错误";
+        //登录成功
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(BaseConstant.USER_ID, loginUser.getId());
+        claims.put(BaseConstant.USERNAME, loginUser.getUsername());
+        String token = JwtUtil.genToken(claims);
+        //把token存储到redis中
+        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+        operations.set(token,token,24*10, TimeUnit.HOURS);
+        return token;
     }
     /**
     * @description 获取当前登录用户的详细信息
@@ -101,5 +103,16 @@ public class UserController {
     @PatchMapping("updateAvatar")
     public Boolean updateAvatar(@RequestParam @URL String avatarUrl) {
         return userService.updateAvatar(avatarUrl);
+    }
+    /**
+     * 更新用户密码
+     * @param vo
+     * @Return: java.lang.Boolean
+     * @author: yangfeng
+     * @date: 2025/6/30 9:33
+     **/
+    @PatchMapping("/updatePwd")
+    public Boolean updatePwd(@RequestBody @Validated UpdatePwdInVO vo){
+        return userService.updatePwd(vo);
     }
 }

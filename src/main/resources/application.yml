@@ -1,41 +1,5 @@
+server:
+  port: 8090
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.1.19:3306/big_event
-    username: root
-    password: 123456
-    type: com.alibaba.druid.pool.DruidDataSource # 推荐 Druid 连接池
-    druid:
-      initial-size: 5
-      max-active: 20
-  data:
-    redis:
-      host: 192.168.1.19
-      port: 6389
-      password: dsk806888  # 无密码可省略
-      database: 9
-      lettuce:
-        pool:
-          max-active: 8      # 连接池最大连接数
-          min-idle: 2        # 最小空闲连接
-# mybatis config
-#mybatis:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-#    map-underscore-to-camel-case: true
-#  mapper-locations: classpath:mapper/*.xml  # XML映射文件路径
-#  type-aliases-package: com.yy.pojo    # 实体类包路径
-
-#mybatis-plus config
-mybatis-plus:
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    map-underscore-to-camel-case: true # 自动驼峰转换
-  mapper-locations: classpath*:/mapper/**/*.xml
-  type-aliases-package: com.yy.pojo
-  global-config:
-    db-config:
-      id-type: auto # 主键自增策略
-      logic-delete-field: delFlag # 逻辑删除字段
-      logic-delete-value: 0
-      logic-not-delete-value: 1
+  profiles:
+    active: dev

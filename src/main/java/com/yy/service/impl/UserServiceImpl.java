@@ -7,8 +7,10 @@ import com.yy.service.UserService;
 import com.yy.mapper.UserMapper;
 import com.yy.utils.Md5Util;
 import com.yy.vo.in.UpUserInVO;
+import com.yy.vo.in.UpdatePwdInVO;
 import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
+import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -59,6 +61,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         u.setId(BaseStorage.getUserId());
         u.setUserPic(avatarUrl);
         return updateById(u);
+    }
+
+    @Override
+    public Boolean updatePwd(UpdatePwdInVO vo) {
+        AssertTool.isFalse(ObjectTool.equals(vo.getOldPwd(),vo.getNewPwd()),"新密码不可和原始密码一样");
+        AssertTool.isTrue(ObjectTool.equals(vo.getNewPwd(),vo.getRePwd()),"新密码和确认密码不一致");
+        Integer userId = BaseStorage.getUserId();
+        User user = getById(userId);
+        AssertTool.notNull(user,"用户不存在");
+        AssertTool.isTrue(ObjectTool.equals(user.getPassword(),Md5Util.getMD5String(vo.getOldPwd())),"原始密码错误");
+        user.setPassword(Md5Util.getMD5String(vo.getNewPwd()));
+        return updateById(user);
     }
 
 }
