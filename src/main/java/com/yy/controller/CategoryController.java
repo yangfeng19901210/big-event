@@ -2,13 +2,13 @@ package com.yy.controller;
 
 import com.yy.service.CategoryService;
 import com.yy.vo.in.AddCategoryInVO;
+import com.yy.vo.out.CategoryListOutVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /*********************************************************
  ** 文章分类controller
@@ -34,5 +34,16 @@ public class CategoryController {
     @PostMapping
     public Boolean addCategory(@Valid @RequestBody AddCategoryInVO vo){
         return categoryService.addCategory(vo);
+    }
+    /**
+     * 分页获取当前用户新增的文章分类列表
+     * @param
+     * @Return: java.util.List<com.yy.vo.out.CategoryListOutVO>
+     * @author: yangfeng
+     * @date: 2025/7/1 15:46
+     **/
+    @GetMapping
+    public List<CategoryListOutVO> queryCurrentUserCategory() {
+        return categoryService.queryCurrentUserCategory();
     }
 }

@@ -8,6 +8,10 @@ spring:
     druid:
       initial-size: 5
       max-active: 20
+      mysql:
+        usePingMethod: false
+        validation-query: SELECT 1
+        test-while-idle: true
   data:
     redis:
       host: 127.0.0.1

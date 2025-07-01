@@ -6,7 +6,11 @@ import com.yy.pojo.Category;
 import com.yy.service.CategoryService;
 import com.yy.mapper.CategoryMapper;
 import com.yy.vo.in.AddCategoryInVO;
+import com.yy.vo.out.CategoryListOutVO;
+import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
 * @author yangFeng
@@ -24,6 +28,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
         category.setCategoryName(vo.getCategoryName());
         category.setCategoryAlias(vo.getCategoryAlias());
         return saveOrUpdate(category);
+    }
+
+    @Override
+    public List<CategoryListOutVO> queryCurrentUserCategory() {
+        return BeanTool.copy(lambdaQuery().eq(Category::getCreateUser, BaseStorage.getUserId()).list(),CategoryListOutVO.class);
     }
 }
 

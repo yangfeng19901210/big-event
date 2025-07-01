@@ -3,7 +3,10 @@ package com.yy.service;
 import com.yy.pojo.Category;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yy.vo.in.AddCategoryInVO;
+import com.yy.vo.out.CategoryListOutVO;
 import jakarta.validation.Valid;
+
+import java.util.List;
 
 /**
 * @author yangFeng
@@ -19,4 +22,12 @@ public interface CategoryService extends IService<Category> {
      * @date: 2025/6/30 11:23
      **/
     Boolean addCategory(@Valid AddCategoryInVO vo);
+    /**
+     * 分页获取当前用户新增的文章分类列表
+     * @param
+     * @Return: java.util.List<com.yy.vo.out.CategoryListOutVO>
+     * @author: yangfeng
+     * @date: 2025/7/1 15:47
+     **/
+    List<CategoryListOutVO> queryCurrentUserCategory();
 }
