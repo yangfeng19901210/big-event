@@ -1,9 +1,7 @@
 package com.yy.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -48,4 +46,7 @@ public class User extends BaseEntity {
      * 头像
      */
     private String userPic;
+    //逻辑删除后将删除字段的标识设置为主键
+    @TableLogic(value = "1",delval = "id")
+    private Integer delFlag;//删除标识
 }
