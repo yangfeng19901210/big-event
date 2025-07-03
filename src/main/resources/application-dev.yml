@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.2.84:3306/big_event
+    url: jdbc:mysql://192.168.2.84:3306/test
     username: root
     password: dsk806888
     type: com.alibaba.druid.pool.DruidDataSource # 推荐 Druid 连接池
