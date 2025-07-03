@@ -26,6 +26,6 @@ public class TsDelTime extends BaseEntity {
     /**
      * 删除标识，未删除时未null，删除后记录删除时间
      */
-    @TableLogic(value = "NULL", delval = "UNIX_TIMESTAMP()")
+    @TableLogic(value = "-1", delval = "UNIX_TIMESTAMP()")
     private Long deletedAt;
 }
