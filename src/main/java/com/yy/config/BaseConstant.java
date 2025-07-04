@@ -29,4 +29,6 @@ public interface BaseConstant {
 
     // 当前请求对sql操作的唯一性id（一个请求有多个sql操作，该id可以知道哪些sql是来自同一个请求的操作）.任务id
     String TASK_ID = "taskId";
+    //用户token
+    String USER_TOKEN = "userToken:";
 }
