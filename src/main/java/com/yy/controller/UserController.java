@@ -64,11 +64,12 @@ public class UserController {
         Map<String, Object> claims = new HashMap<>();
         claims.put(BaseConstant.USER_ID, loginUser.getId());
         claims.put(BaseConstant.USERNAME, loginUser.getUsername());
-        String token = JwtUtil.genToken(claims);
+        int expireCoefficient = 24;
+        String token = JwtUtil.genToken(claims,expireCoefficient*60*60*1000L);
         //把token存储到redis中
         ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
         //token放到redis中，过期时间设置为2小时
-        operations.set(BaseConstant.USER_TOKEN+loginUser.getId(),token,24, TimeUnit.HOURS);
+        operations.set(BaseConstant.USER_TOKEN+loginUser.getId(),token,expireCoefficient, TimeUnit.HOURS);
         return token;
     }
     /**

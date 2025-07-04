@@ -9,13 +9,11 @@ import java.util.Map;
 public class JwtUtil {
 
     private static final String KEY = "itheima";
+    private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24; //1天
 	
 	//接收业务数据,生成token并返回
     public static String genToken(Map<String, Object> claims) {
-        return JWT.create()
-                .withClaim("claims", claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + 1000 * 60 * 60*24*10 ))
-                .sign(Algorithm.HMAC256(KEY));
+        return genToken(claims, EXPIRE_TIME);
     }
 
 	//接收token,验证token,并返回业务数据
@@ -25,6 +23,12 @@ public class JwtUtil {
                 .verify(token)
                 .getClaim("claims")
                 .asMap();
+    }
+    public static String genToken(Map<String, Object> claims,long expireTime) {
+        return JWT.create()
+                .withClaim("claims", claims)
+                .withExpiresAt(new Date(System.currentTimeMillis() + expireTime ))
+                .sign(Algorithm.HMAC256(KEY));
     }
 
 }
