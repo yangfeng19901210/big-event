@@ -5,6 +5,7 @@ import com.yy.exception.AuthException;
 import com.yy.utils.JwtUtil;
 import com.yy.utils.ThreadLocalUtil;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
+import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 import io.gitee.loulan_yxq.owner.core.tool.StrTool;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -34,6 +35,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             String userName = (String) claims.get(BaseConstant.USERNAME);
             String redisToken = operations.get(BaseConstant.USER_TOKEN+userId);
             if(StrTool.isBlank(redisToken)){
+                throw new AuthException("token已过期");
+            }
+            if(!ObjectTool.equals(token,redisToken)){
                 throw new AuthException("token已过期");
             }
             //将用户id和用户名放入本地线程

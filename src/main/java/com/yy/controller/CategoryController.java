@@ -2,6 +2,7 @@ package com.yy.controller;
 
 import com.yy.service.CategoryService;
 import com.yy.vo.in.AddCategoryInVO;
+import com.yy.vo.in.UpdateCategoryInVO;
 import com.yy.vo.out.CategoryListOutVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,17 @@ public class CategoryController {
     @GetMapping
     public List<CategoryListOutVO> queryCurrentUserCategory() {
         return categoryService.queryCurrentUserCategory();
+    }
+    /**
+     * 更新文章分类信息
+     * @param vo
+     * @Return: java.lang.Boolean
+     * @author: yangfeng
+     * @date: 2025/7/4 16:43
+     **/
+    @PutMapping
+    public Boolean update(@Valid @RequestBody UpdateCategoryInVO vo) {
+        return categoryService.updateCategory(vo);
+
     }
 }

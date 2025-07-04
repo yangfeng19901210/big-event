@@ -6,6 +6,7 @@ import com.yy.pojo.Category;
 import com.yy.service.CategoryService;
 import com.yy.mapper.CategoryMapper;
 import com.yy.vo.in.AddCategoryInVO;
+import com.yy.vo.in.UpdateCategoryInVO;
 import com.yy.vo.out.CategoryListOutVO;
 import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,12 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
 
     @Override
     public List<CategoryListOutVO> queryCurrentUserCategory() {
-        return BeanTool.copy(lambdaQuery().eq(Category::getCreateUser, BaseStorage.getUserId()).list(),CategoryListOutVO.class);
+        return BeanTool.copy(lambdaQuery().eq(Category::getCreateUser, BaseStorage.getUserId()).orderByDesc(Category::getCreateTime).list(),CategoryListOutVO.class);
+    }
+
+    @Override
+    public Boolean updateCategory(UpdateCategoryInVO vo) {
+        return updateById(BeanTool.copy(vo, Category.class));
     }
 }
 
