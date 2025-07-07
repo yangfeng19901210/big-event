@@ -1,4 +1,4 @@
-package com.yy.vo.page;
+package com.yy.vo.query;
 
 import com.yy.common.entity.PageQuery;
 import lombok.Data;
@@ -13,4 +13,12 @@ import lombok.Data;
  *********************************************************/
 @Data
 public class ArticlePageQueryVO extends PageQuery {
+    /**
+     * 文章分类id
+     */
+    private Integer categoryId;
+    /**
+     * 发布状态
+     */
+    private String state;
 }

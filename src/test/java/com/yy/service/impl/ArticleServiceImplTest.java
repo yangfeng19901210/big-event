@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yy.common.entity.PageDTO;
 import com.yy.pojo.Article;
 import com.yy.service.ArticleService;
-import com.yy.vo.page.ArticlePageQueryVO;
+import com.yy.vo.query.ArticlePageQueryVO;
 import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class ArticleServiceImplTest {
     @Resource

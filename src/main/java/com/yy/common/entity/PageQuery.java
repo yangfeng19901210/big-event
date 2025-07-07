@@ -2,6 +2,7 @@ package com.yy.common.entity;
 
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -9,10 +10,12 @@ public class PageQuery {
     /**
      * 当前页码
      */
+    @NotNull(message = "页码不可为空")
     private Long pageNo;
     /**
      * 每页显示条数
      */
+    @NotNull(message = "每页显示条数不可为空")
     private Long pageSize;
     /**
      * 排序字段

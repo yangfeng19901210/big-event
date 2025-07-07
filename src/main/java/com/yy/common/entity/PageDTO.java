@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class PageDTO<V> {
     private Long total;
     private Long pages;
-    private List<V> list;
+    private List<V> items;
 
     /**
      * 返回空分页结果
