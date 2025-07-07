@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yy.pojo.Article;
 import com.yy.service.ArticleService;
 import com.yy.mapper.ArticleMapper;
+import com.yy.vo.in.AddArticleInVO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,6 +16,10 @@ import org.springframework.stereotype.Service;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     implements ArticleService{
 
+    @Override
+    public Boolean add(AddArticleInVO vo) {
+        return null;
+    }
 }
 
 
