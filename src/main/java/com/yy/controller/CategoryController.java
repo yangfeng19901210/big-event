@@ -59,4 +59,15 @@ public class CategoryController {
         return categoryService.updateCategory(vo);
 
     }
+    /**
+     * 删除文章分类
+     * @param id 文章分类id
+     * @Return: java.lang.Boolean
+     * @author: yangfeng
+     * @date: 2025/7/7 9:06
+     **/
+    @DeleteMapping
+    public Boolean deleteCategory(Integer id) {
+        return categoryService.removeById(id);
+    }
 }
