@@ -2,6 +2,7 @@ package com.yy.controller;
 
 import com.yy.service.ArticleService;
 import com.yy.vo.in.AddArticleInVO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class ArticleController {
      * @date: 2025/7/7 9:41
      **/
     @PostMapping
-    public Boolean add(@RequestBody AddArticleInVO vo){
+    public Boolean add(@RequestBody @Valid AddArticleInVO vo){
         return articleService.add(vo);
     }
 }
