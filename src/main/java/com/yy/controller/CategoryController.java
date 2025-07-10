@@ -45,7 +45,7 @@ public class CategoryController {
      **/
     @GetMapping
     public List<CategoryListOutVO> queryCurrentUserCategory() {
-        return categoryService.queryCurrentUserCategory();
+        return categoryService.getAllCategoryList();
     }
     /**
      * 更新文章分类信息

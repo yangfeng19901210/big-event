@@ -32,6 +32,15 @@ public interface CategoryService extends IService<Category> {
      **/
     List<CategoryListOutVO> queryCurrentUserCategory();
     /**
+     * 获取所有的文章分类
+     * @param
+     * @Return: java.util.List<com.yy.vo.out.CategoryListOutVO>
+     * @author: yangfeng
+     * @date: 2025/7/10 17:51
+     **/
+    List<CategoryListOutVO> getAllCategoryList();
+
+    /**
      * 更新文章分类信息
      * @param vo
      * @Return: java.lang.Boolean

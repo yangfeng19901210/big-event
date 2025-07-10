@@ -37,6 +37,11 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category>
     }
 
     @Override
+    public List<CategoryListOutVO> getAllCategoryList() {
+        return BeanTool.copy(lambdaQuery().orderByDesc(Category::getCreateTime).list(),CategoryListOutVO.class);
+    }
+
+    @Override
     public Boolean updateCategory(UpdateCategoryInVO vo) {
         return updateById(BeanTool.copy(vo, Category.class));
     }
