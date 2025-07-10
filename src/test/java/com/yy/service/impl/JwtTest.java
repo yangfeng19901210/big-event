@@ -5,11 +5,12 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.yy.pojo.Coupon;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @ClassName JwtTest
@@ -18,6 +19,7 @@ import java.util.Map;
  * @Date 2025/6/8 15:23
  * @Version 1.0
  */
+@Slf4j
 public class JwtTest {
     @Test
     void testCreateToken(){
@@ -45,5 +47,16 @@ public class JwtTest {
         //如果篡改了头部和载荷部分的数据,那么验证失败
         //如果秘钥改了,验证失败
         //token过期
+    }
+    @Test
+    void testListSet(){
+        List<Coupon> list = new ArrayList<>();
+        list.add(new Coupon(1,"优惠券1"));
+        list.add(new Coupon(2,"优惠券2"));
+        log.info("设置前数据为:{}",list);
+        list.stream()
+                .peek(coupon -> coupon.setType(100))
+                .toList();
+        log.info("设置后数据为:{}",list);
     }
 }
