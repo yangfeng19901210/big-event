@@ -24,9 +24,9 @@ public class AliOssUtil {
     // Endpoint以华东1（杭州）为例，其它Region请按实际情况填写。
     @Value("${aliyun.endpoint:https://oss-cn-beijing.aliyuncs.com}")
     private String ENDPOINT = "https://oss-cn-beijing.aliyuncs.com";
-    @Value("${aliyun.accessKeyId:1}")
+    @Value("${aliyun.uKeyId:1}")
     private String ACCESS_KEY_ID="LTAI5tDo5L5Xzx8vaHRxyFFB";
-    @Value("${aliyun.accessKeySecret:1}")
+    @Value("${aliyun.uKeySecret:1}")
     private String ACCESS_KEY_SECRET="7Y68TzPJUzEZLslsmbvyENm5get9eZ";
     // 填写Bucket名称，例如examplebucket。
     @Value("${aliyun.bucketName:1}")
