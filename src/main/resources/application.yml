@@ -3,6 +3,9 @@ server:
 spring:
   profiles:
     active: dev
+  servlet:
+    multipart:
+      max-file-size: 100MB
 aliyun:
   endpoint: https://oss-cn-beijing.aliyuncs.com
   uKeyId: ${ALIYUN_ACCESS_KEY_ID}
