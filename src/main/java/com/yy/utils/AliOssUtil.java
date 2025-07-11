@@ -25,9 +25,9 @@ public class AliOssUtil {
     @Value("${aliyun.endpoint:https://oss-cn-beijing.aliyuncs.com}")
     private String ENDPOINT = "https://oss-cn-beijing.aliyuncs.com";
     @Value("${aliyun.uKeyId:1}")
-    private String ACCESS_KEY_ID="LTAI5tDo5L5Xzx8vaHRxyFFB";
+    private String ACCESS_KEY_ID;
     @Value("${aliyun.uKeySecret:1}")
-    private String ACCESS_KEY_SECRET="7Y68TzPJUzEZLslsmbvyENm5get9eZ";
+    private String ACCESS_KEY_SECRET;
     // 填写Bucket名称，例如examplebucket。
     @Value("${aliyun.bucketName:1}")
     private String BUCKET_NAME = "big-event";
