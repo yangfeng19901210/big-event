@@ -3,3 +3,8 @@ server:
 spring:
   profiles:
     active: dev
+aliyun:
+  endpoint: https://oss-cn-beijing.aliyuncs.com
+  accessKeyId: ${ALIYUN_ACCESS_KEY_ID}
+  accessKeySecret: ${ALIYUN_ACCESS_KEY_SECRET}
+  bucketName: yang199-big-event
