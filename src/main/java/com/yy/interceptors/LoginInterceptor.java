@@ -23,6 +23,7 @@ public class LoginInterceptor implements HandlerInterceptor {
     private StringRedisTemplate stringRedisTemplate;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        System.out.println("拦截路径: " + request.getRequestURI());
         //令牌验证
         String token = request.getHeader("Authorization");
         AssertTool.notBlank(token,"令牌不能为空");
