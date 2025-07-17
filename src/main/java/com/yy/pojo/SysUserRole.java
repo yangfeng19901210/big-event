@@ -1,10 +1,10 @@
 package com.yy.pojo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.util.Date;
+
+import com.yy.common.entity.BaseEntity;
 import lombok.Data;
 
 /**
@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @TableName(value ="sys_user_role")
 @Data
-public class SysUserRole {
+public class SysUserRole extends BaseEntity {
     /**
      * 用户id
      */
@@ -27,17 +27,8 @@ public class SysUserRole {
     private Long roleId;
 
     /**
-     * 创建时间
+     * 删除标识，默认-1未删除，已删除设置为null
      */
-    private Date createTime;
-
-    /**
-     * 修改时间
-     */
-    private Date updateTime;
-
-    /**
-     * 删除标识，默认-1未删除，已删除设置为主键的值
-     */
+    @TableLogic(value = "-1",delval = "null")
     private Integer delFlag;
 }
