@@ -20,4 +20,22 @@
         id,username,password,nickname,email,user_pic,
         create_time,update_time,del_flag
     </sql>
+    <select id="getByUserId" resultType="com.yy.pojo.SysPermission">
+        SELECT DISTINCT p.id, p.name, p.code
+        FROM permissions p
+        INNER JOIN role_permissions rp ON p.id = rp.permission_id
+        INNER JOIN roles r ON rp.role_id = r.id
+        INNER JOIN user_roles ur ON r.id = ur.role_id
+        INNER JOIN users u ON ur.user_id = u.id
+        WHERE u.id = 1;
+    </select>
+    <select id="getPermByUserName" resultType="com.yy.pojo.SysPermission">
+        SELECT DISTINCT p.id, p.name, p.code
+        FROM permissions p
+        INNER JOIN role_permissions rp ON p.id = rp.permission_id
+        INNER JOIN roles r ON rp.role_id = r.id
+        INNER JOIN user_roles ur ON r.id = ur.role_id
+        INNER JOIN users u ON ur.user_id = u.id
+        WHERE u.username = 'zhangsan';
+    </select>
 </mapper>
