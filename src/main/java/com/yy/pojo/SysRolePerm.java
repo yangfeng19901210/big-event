@@ -17,13 +17,12 @@ public class SysRolePerm extends BaseEntity {
     /**
      * 权限id
      */
-    @TableId
+    @TableId(type = IdType.NONE)
     private Long permId;
 
     /**
      * 角色id
      */
-    @TableId
     private Long roleId;
 
     /**

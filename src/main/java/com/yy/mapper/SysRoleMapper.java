@@ -2,6 +2,7 @@ package com.yy.mapper;
 
 import com.yy.pojo.SysRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
 * @author yangfeng
@@ -9,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 * @createDate 2025-07-17 16:26:59
 * @Entity com.yy.pojo.SysRole
 */
+@Mapper
 public interface SysRoleMapper extends BaseMapper<SysRole> {
 
 }
