@@ -30,7 +30,7 @@ public interface UserMapper extends BaseMapper<User> {
     void addV1(String userName, String password, LocalDateTime createTime, LocalDateTime updateTime);
     /**
      * 根据用户id查询权限
-     * @param userId
+     * @param userId 用户id
      * @Return: java.util.List<com.yy.pojo.SysPermission>
      * @author: yangfeng
      * @date: 2025/7/17 17:55
@@ -38,7 +38,7 @@ public interface UserMapper extends BaseMapper<User> {
     List<SysPermission> getByUserId(@Param("userId") Long userId);
     /**
      * 根据用户名查询权限
-     * @param userName
+     * @param userName 用户名
      * @Return: java.util.List<com.yy.pojo.SysPermission>
      * @author: yangfeng
      * @date: 2025/7/17 17:59
