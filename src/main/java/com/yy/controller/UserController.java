@@ -81,7 +81,7 @@ public class UserController {
     */
     @GetMapping("/userInfo")
     public User getUserInfo(){
-        Integer userId = BaseStorage.getUserId();
+        Long userId = BaseStorage.getUserId();
         return userService.getById(userId);
     }
     /**

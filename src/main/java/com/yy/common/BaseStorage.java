@@ -43,12 +43,12 @@ public class BaseStorage {
         push(BaseConstant.USER_ID, ObjectTool.isNotNull(userId) ? String.valueOf(userId) : null);
     }
 
-    public static Integer getUserId() {
+    public static Long getUserId() {
         String userId = get(BaseConstant.USER_ID);
         if (ObjectTool.isNull(userId)) {
             return null;
         } else {
-            return Integer.valueOf(userId);
+            return Long.valueOf(userId);
         }
     }
     public static void pushUsername(String username) {

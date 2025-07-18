@@ -20,5 +20,13 @@ public interface SysRoleService extends IService<SysRole> {
      * @date: 2025/7/18 9:10
      **/
     boolean addPerms(Long roleId, List<Long> permIds);
+    /**
+     * 根据用户id获取角色
+     * @param userId
+     * @Return: java.util.List<com.yy.pojo.SysRole>
+     * @author: yangfeng
+     * @date: 2025/7/18 11:18
+     **/
+    List<SysRole> getRolesByUserId(Long userId);
 
 }

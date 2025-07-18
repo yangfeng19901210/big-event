@@ -19,7 +19,7 @@ public class User extends BaseEntity {
      * ID
      */
     @TableId(type = IdType.AUTO)
-    private Integer id;
+    private Long id;
 
     /**
      * 用户名
