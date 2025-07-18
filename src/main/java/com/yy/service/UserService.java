@@ -6,6 +6,8 @@ import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
 import org.hibernate.validator.constraints.URL;
 
+import java.util.List;
+
 /**
 * @author yangFeng
 * @description 针对表【user(用户表)】的数据库操作Service
@@ -54,4 +56,13 @@ public interface UserService extends IService<User> {
      * @date: 2025/6/30 9:47
      **/
     Boolean updatePwd(UpdatePwdInVO vo);
+    /**
+     * 用户添加角色
+     * @param userId 用户id
+     * @param roleIds 角色id集合
+     * @Return: boolean
+     * @author: yangfeng
+     * @date: 2025/7/18 9:20
+     **/
+    boolean addRolesToUser(Long userId, List<Long> roleIds);
 }

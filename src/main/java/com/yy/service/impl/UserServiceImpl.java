@@ -2,7 +2,9 @@ package com.yy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yy.common.BaseStorage;
+import com.yy.pojo.SysUserRole;
 import com.yy.pojo.User;
+import com.yy.service.SysUserRoleService;
 import com.yy.service.UserService;
 import com.yy.mapper.UserMapper;
 import com.yy.utils.Md5Util;
@@ -15,6 +17,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
 * @author yangFeng
@@ -26,6 +29,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     implements UserService{
     @Resource
     private UserMapper userMapper;
+    @Resource
+    private SysUserRoleService sysUserRoleService;
     @Override
     public Boolean register(String userName, String password) {
         User u = getByUserName(userName);
@@ -73,6 +78,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         AssertTool.isTrue(ObjectTool.equals(user.getPassword(),Md5Util.getMD5String(vo.getOldPwd())),"原始密码错误");
         user.setPassword(Md5Util.getMD5String(vo.getNewPwd()));
         return updateById(user);
+    }
+
+    @Override
+    public boolean addRolesToUser(Long userId, List<Long> roleIds) {
+        List<SysUserRole> userRoles = roleIds.stream().map(roleId -> {
+            SysUserRole sysUserRole = new SysUserRole();
+            sysUserRole.setUserId(userId);
+            sysUserRole.setRoleId(roleId);
+            return sysUserRole;
+        }).toList();
+        return sysUserRoleService.saveBatch(userRoles);
     }
 
 }

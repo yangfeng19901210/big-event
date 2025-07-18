@@ -14,10 +14,10 @@ class SysPermissionServiceImplTest {
     @Test
     void add(){
         SysPermission sysPermission = new SysPermission();
-        sysPermission.setPermCode("user:userInfo");
-        sysPermission.setPermName("获取用户详细信息");
-        sysPermission.setUrlPattern("/user/userInfo");
-        sysPermission.setHttpMethod("GET");
+        sysPermission.setPermCode("article:delete");
+        sysPermission.setPermName("删除文章");
+        sysPermission.setUrlPattern("/article");
+        sysPermission.setHttpMethod("DELETE");
         sysPermissionService.save(sysPermission);
     }
 

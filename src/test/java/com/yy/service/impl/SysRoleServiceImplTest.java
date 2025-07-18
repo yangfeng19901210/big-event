@@ -6,6 +6,8 @@ import jakarta.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SysRoleServiceImplTest {
@@ -17,6 +19,13 @@ class SysRoleServiceImplTest {
         sysRole.setRoleCode("admin");
         sysRole.setRoleName("管理员");
         sysRoleService.save(sysRole);
+    }
+    /**
+     * 添加角色权限
+     */
+    @Test
+    void addPermsToRole(){
+        sysRoleService.addPerms(3L, List.of(1L, 2L, 3L));
     }
 
 }
