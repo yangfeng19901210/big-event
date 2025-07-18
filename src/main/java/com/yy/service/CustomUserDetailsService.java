@@ -1,11 +1,17 @@
 package com.yy.service;
 
+import com.yy.mapper.UserMapper;
 import com.yy.pojo.CustomUserDetails;
+import com.yy.pojo.SysPermission;
+import com.yy.pojo.User;
+import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import jakarta.annotation.Resource;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 /*********************************************************
  **
@@ -19,6 +25,8 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
     @Resource
     private UserService userService;
+    @Resource
+    private UserMapper userMapper;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return new CustomUserDetails(
@@ -28,5 +36,12 @@ public class CustomUserDetailsService implements UserDetailsService {
                 true,    // 账户启用状态
                 null
         );
+    }
+
+    private List<GrantedAuthority> getByUserName(String username){
+        User user = userService.getByUserName(username);
+        AssertTool.notNull(user, "User not found");
+        List<SysPermission> permissions = userMapper.getPermByUserName(username);
+        return null;
     }
 }
