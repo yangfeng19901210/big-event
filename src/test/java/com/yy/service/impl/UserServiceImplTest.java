@@ -28,7 +28,7 @@ class UserServiceImplTest {
     @Test
     void update(){
         User user = new User();
-        user.setId(7);
+        user.setId(7L);
         user.setUsername("test111");
         user.setNickname("test222");
         userService.updateById(user);

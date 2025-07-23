@@ -33,7 +33,7 @@ public class Category extends BaseEntity {
     /**
      * 创建人ID
      */
-    private Integer createUser;
+    private Long createUser;
     //逻辑删除后将删除字段的标识设置为主键
     @TableLogic(value = "-1",delval = "id")
     private Integer delFlag;//删除标识

@@ -16,7 +16,7 @@ class CategoryServiceImplTest {
         Category category = new Category();
         category.setCategoryName("test");
         category.setCategoryAlias("test");
-        category.setCreateUser(3);
+        category.setCreateUser(3L);
         categoryService.save(category);
     }
     @Test

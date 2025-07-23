@@ -1,3 +1,15 @@
+# 白名单不进行拦截的路径
+security:
+  white-list:
+    - /error
+    - /css/**
+    - /js/**
+    - /webjars/**
+    - /favicon.ico
+    - /.well-known/**
+    - /hello/**
+    - /user/login
+    - /user/register
 server:
   port: 8090
 spring:
@@ -11,3 +23,6 @@ aliyun:
   uKeyId: ${ALIYUN_ACCESS_KEY_ID}
   uKeySecret: ${ALIYUN_ACCESS_KEY_SECRET}
   bucketName: yang199-big-event
+
+
+

@@ -14,6 +14,7 @@ import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 import jakarta.annotation.Resource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,16 +32,16 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     private UserMapper userMapper;
     @Resource
     private SysUserRoleService sysUserRoleService;
+    @Resource
+    private PasswordEncoder passwordEncoder;
     @Override
     public Boolean register(String userName, String password) {
         User u = getByUserName(userName);
         AssertTool.isNull(u,"用户名已被占用");
-        //对密码加密
-        String md5String = Md5Util.getMD5String(password);
-        //添加用户
-        LocalDateTime now = LocalDateTime.now();
-        userMapper.addV1(userName,md5String,now,now);
-        return true;
+        u = new User();
+        u.setUsername(userName);
+        u.setPassword(passwordEncoder.encode(password));
+        return save(u);
     }
     /**
      * @Description TODO
@@ -72,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Boolean updatePwd(UpdatePwdInVO vo) {
         AssertTool.isFalse(ObjectTool.equals(vo.getOldPwd(),vo.getNewPwd()),"新密码不可和原始密码一样");
         AssertTool.isTrue(ObjectTool.equals(vo.getNewPwd(),vo.getRePwd()),"新密码和确认密码不一致");
-        Integer userId = BaseStorage.getUserId();
+        Long userId = BaseStorage.getUserId();
         User user = getById(userId);
         AssertTool.notNull(user,"用户不存在");
         AssertTool.isTrue(ObjectTool.equals(user.getPassword(),Md5Util.getMD5String(vo.getOldPwd())),"原始密码错误");
