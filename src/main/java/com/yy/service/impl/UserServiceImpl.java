@@ -43,7 +43,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         u.setPassword(passwordEncoder.encode(password));
         return save(u);
     }
-    /**
+    /** 根据用户名查询用户信息
      * @Description TODO
      * @Author yangfeng
      * @Date 2025/6/7 12:01
@@ -52,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     public User getByUserName(String userName) {
-        return userMapper.getByUserName(userName);
+        return lambdaQuery().eq(User::getUsername, userName).one();
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.yy.vo.query.ArticlePageOutVO;
 import com.yy.vo.query.ArticlePageQueryVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,6 +58,7 @@ public class ArticleController {
      * @author: yangfeng
      * @date: 2025/7/7 14:06
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public ArticleDetailOutVO getArticleById(Integer id) {
         return articleService.getDetailById(id);

@@ -3,34 +3,44 @@ package com.yy.controller;
 import com.yy.common.BaseStorage;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;
-import com.yy.exception.BusinessException;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
-import com.yy.utils.Md5Util;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
-import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
+import jakarta.annotation.Resource;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @Validated
+@Slf4j
 public class UserController {
     private final UserService userService;
 
     private final StringRedisTemplate stringRedisTemplate;
+    @Resource
+    private AuthenticationManager authenticationManager;
+    @Resource
+    private JwtUtil jwtUtil;
     /**
      * 用户注册
      * @param username
@@ -52,25 +62,26 @@ public class UserController {
     */
     @PostMapping("/login")
     public String login(@Pattern(regexp = "^\\S{5,16}$") String username, @Pattern(regexp = "^\\S{5,16}$") String password) {
-        //根据用户名查询用户
-        User loginUser = userService.getByUserName(username);
-        //判断该用户是否存在
-        AssertTool.notNull(loginUser,"用户名错误");
-        //判断密码是否正确  loginUser对象中的password是密文
-        if (!Md5Util.getMD5String(password).equals(loginUser.getPassword())) {
-            throw new BusinessException("密码错误");
+        log.info("用户登录,用户名{} 密码{}", username,password);
+        // 1. 认证用户名密码
+        try {
+            Authentication auth = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password)
+            );
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            List<String> roles = userDetails.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .toList();
+            String token = jwtUtil.generateToken(userDetails.getUsername(), roles);
+            //把token存储到redis中
+            ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
+            //token放到redis中，过期时间设置为2小时
+            operations.set(BaseConstant.USER_TOKEN+username,token,24, TimeUnit.HOURS);
+            return token;
+        } catch (AuthenticationException e) {
+            throw e;
         }
-        //登录成功
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(BaseConstant.USER_ID, loginUser.getId());
-        claims.put(BaseConstant.USERNAME, loginUser.getUsername());
-        int expireCoefficient = 24;
-        String token = JwtUtil.genToken(claims,expireCoefficient*60*60*1000L);
-        //把token存储到redis中
-        ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
-        //token放到redis中，过期时间设置为2小时
-        operations.set(BaseConstant.USER_TOKEN+loginUser.getId(),token,expireCoefficient, TimeUnit.HOURS);
-        return token;
     }
     /**
     * @description 获取当前登录用户的详细信息

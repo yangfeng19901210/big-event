@@ -32,6 +32,8 @@ public class SecurityConfig {
     private JwtAuthFilter jwtAuthFilter;
     @Resource
     private WhiteListConfig whiteListConfig;
+    @Resource
+    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration authConfig) throws Exception {
@@ -43,6 +45,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(whiteListConfig.getWhiteList().toArray(new String[0])).permitAll()// 放行登录页及静态资源
                         .anyRequest().authenticated() // 其他请求需认证
+                )
+                .exceptionHandling(ex -> ex
+                        .accessDeniedHandler(jwtAccessDeniedHandler) // 注册权限异常处理器
+//                        .authenticationEntryPoint(authenticationEntryPoint) // 认证异常处理器
                 )
     //            .userDetailsService(sysUserDetailsService)
     //            .formLogin(Customizer.withDefaults())

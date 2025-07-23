@@ -6,6 +6,8 @@ import com.yy.exception.BusinessException;
 import io.gitee.loulan_yxq.owner.core.exception.AssertException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -18,6 +20,11 @@ import java.util.Map;
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
+    // 主动排除 AccessDeniedException 和 AuthenticationException
+    @ExceptionHandler({AccessDeniedException.class})
+    public void rethrowSecurityException() throws Exception {
+        throw new Exception(); // 重新抛出，交给 ExceptionTranslationFilter 处理
+    }
     /**
      * 处理常见异常
      * @param

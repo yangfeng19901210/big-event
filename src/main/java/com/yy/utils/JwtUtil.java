@@ -1,34 +1,51 @@
 package com.yy.utils;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+import com.yy.config.JwtProperties;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.Map;
-
+import java.util.List;
+@Component
+@Slf4j
 public class JwtUtil {
 
-    private static final String KEY = "itheima";
-    private static final long EXPIRE_TIME = 1000 * 60 * 60 * 24; //1天
-	
-	//接收业务数据,生成token并返回
-    public static String genToken(Map<String, Object> claims) {
-        return genToken(claims, EXPIRE_TIME);
+    @Resource
+    private JwtProperties jwtProperties;
+
+    // 生成令牌（含角色信息）
+    public String generateToken(String username, List<String> roles) {
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("roles", roles)  // 嵌入角色信息
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtProperties.getTtl()))
+                .signWith(Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes()))
+                .compact();
     }
 
-	//接收token,验证token,并返回业务数据
-    public static Map<String, Object> parseToken(String token) {
-        return JWT.require(Algorithm.HMAC256(KEY))
+    // 解析令牌获取用户名
+    public String getUsernameFromToken(String token) {
+        return Jwts.parser()
+                .verifyWith(Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes()))
                 .build()
-                .verify(token)
-                .getClaim("claims")
-                .asMap();
-    }
-    public static String genToken(Map<String, Object> claims,long expireTime) {
-        return JWT.create()
-                .withClaim("claims", claims)
-                .withExpiresAt(new Date(System.currentTimeMillis() + expireTime ))
-                .sign(Algorithm.HMAC256(KEY));
+                .parseSignedClaims(token)
+                .getPayload()
+                .getSubject();
     }
 
+    // 验证令牌有效性
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parser().verifyWith(Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes())).build().parse(token);
+            return true;
+        } catch (JwtException | IllegalArgumentException e) {
+            log.error("token无效",e);
+            return false;
+        }
+    }
 }

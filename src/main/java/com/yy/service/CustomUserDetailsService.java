@@ -1,7 +1,7 @@
 package com.yy.service;
 
 import com.yy.mapper.UserMapper;
-import com.yy.pojo.CustomUserDetails;
+import com.yy.pojo.CustomUser;
 import com.yy.pojo.SysPermission;
 import com.yy.pojo.SysRole;
 import com.yy.pojo.User;
@@ -38,26 +38,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.getByUserName(username);
         AssertTool.notNull(user, "User not found");
-        return new CustomUserDetails(
+        List<SysPermission> permissions = userMapper.getPermByUserName(username);
+        List<SysRole> roles = sysRoleService.getRolesByUserId(user.getId());
+        return new CustomUser(
                 user.getUsername(),
                 user.getPassword(), // 数据库密码需已加密
-                StrTool.isNotBlank(user.getEmail())?user.getEmail():null,
-                true,    // 账户启用状态
-                getByUserName(username, user.getId()) // 获取权限列表
+                permissions.stream().map(SysPermission::getPermCode).toList(),
+                roles.stream().map(SysRole::getRoleCode).toList()
+
         );
-    }
-    private List<GrantedAuthority> getByUserName(String username,Long userId){
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        //获取权限列表
-        List<SysPermission> permissions = userMapper.getPermByUserName(username);
-        //获取角色列表
-        List<SysRole> roles = sysRoleService.getRolesByUserId(userId);
-        permissions.forEach(permission -> {
-            authorities.add(new SimpleGrantedAuthority(permission.getPermCode()));
-        });
-        roles.forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority("ROLE_"+role.getRoleCode()));
-        });
-        return authorities;
     }
 }

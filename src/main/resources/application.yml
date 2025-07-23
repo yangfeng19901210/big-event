@@ -23,6 +23,10 @@ aliyun:
   uKeyId: ${ALIYUN_ACCESS_KEY_ID}
   uKeySecret: ${ALIYUN_ACCESS_KEY_SECRET}
   bucketName: yang199-big-event
+jwt:
+  secret-key: VbM5f7NtItTlDPfwMBclhmrZ4tTx5OQD
+  ttl: 7200000
+  token-name: Authorization
 
 
 
