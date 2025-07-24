@@ -79,7 +79,7 @@ public class UserController {
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
             //token放到redis中，过期时间设置为2小时
-            operations.set(BaseConstant.USER_TOKEN+userDetails.getId(),token,24, TimeUnit.HOURS);
+            operations.set(BaseConstant.USER_TOKEN+userDetails.getId(),BaseConstant.TOKEN_PREFIX+token,24, TimeUnit.HOURS);
             return BaseConstant.TOKEN_PREFIX+token;
         } catch (AuthenticationException e) {
             throw e;
