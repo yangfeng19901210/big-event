@@ -1,11 +1,13 @@
 package com.yy.filter;
 
+import com.yy.config.BaseConstant;
 import com.yy.config.WhiteListConfig;
 import com.yy.exception.AuthException;
 import com.yy.service.CustomUserDetailsService;
 import com.yy.utils.JwtUtil;
 import io.gitee.loulan_yxq.owner.core.exception.AssertException;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
+import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -63,6 +65,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if(jwtUtil.validateToken(token)){
                 String username = jwtUtil.getUsernameFromToken(token);
                 UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+                String redisToken = stringRedisTemplate.opsForValue().get(BaseConstant.USER_TOKEN + username);
+                AssertTool.notBlank(redisToken,"无效token");
+                AssertTool.isTrue(ObjectTool.equals(tokenHeader,redisToken),"无效token");
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );

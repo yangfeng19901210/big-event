@@ -77,11 +77,11 @@ public class UserController {
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .toList();
-            String token = jwtUtil.generateToken(userDetails.getUsername(), roles,1000*60*60*24);
+            String token = jwtUtil.generateToken(userDetails.getUsername(),userDetails.getId(), roles,1000*60*60*24);
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
             //token放到redis中，过期时间设置为2小时
-            operations.set(BaseConstant.USER_TOKEN+userDetails.getId(),BaseConstant.TOKEN_PREFIX+token,24, TimeUnit.HOURS);
+            operations.set(BaseConstant.USER_TOKEN+username,BaseConstant.TOKEN_PREFIX+token,24, TimeUnit.HOURS);
             return BaseConstant.TOKEN_PREFIX+token;
         } catch (AuthenticationException e) {
             throw e;
@@ -133,5 +133,19 @@ public class UserController {
     @PatchMapping("/updatePwd")
     public Boolean updatePwd(@RequestBody @Validated UpdatePwdInVO vo){
         return userService.updatePwd(vo);
+    }
+    /**
+     * 用户退出登录删除redis中的token信息
+     * @param authentication
+     * @Return: java.lang.Boolean
+     * @author: yangfeng
+     * @date: 2025/7/24 15:53
+     **/
+    @PostMapping("/logout")
+    public Boolean logout(Authentication authentication){
+        //删除redis中的token信息
+        CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+        return stringRedisTemplate.delete(BaseConstant.USER_TOKEN+userDetails.getUsername());
+
     }
 }

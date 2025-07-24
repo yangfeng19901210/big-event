@@ -90,8 +90,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         CustomUser userDetails = (CustomUser) authentication.getPrincipal();
         User user = getById(userDetails.getId());
         AssertTool.notNull(user,"用户不存在");
-        AssertTool.isTrue(ObjectTool.equals(user.getPassword(),Md5Util.getMD5String(vo.getOldPwd())),"原始密码错误");
-        user.setPassword(Md5Util.getMD5String(vo.getNewPwd()));
+        AssertTool.isTrue(passwordEncoder.matches(vo.getOldPwd(), user.getPassword()),"原始密码错误");
+        user.setPassword(passwordEncoder.encode(vo.getNewPwd()));
         return updateById(user);
     }
 

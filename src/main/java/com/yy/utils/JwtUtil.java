@@ -22,18 +22,20 @@ public class JwtUtil {
     private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     // 生成令牌（含角色信息）
-    public String generateToken(String username, List<String> roles,long ttl) {
+    public String generateToken(String username,Long userId, List<String> roles,long ttl) {
         if(ttl <= 0) {
             ttl = jwtProperties.getTtl(); // 如果传入的ttl无效，使用默认配置
         }
         return Jwts.builder()
                 .setSubject(username)
                 .claim("roles", roles)  // 嵌入角色信息
+                .claim("userId", userId) // 嵌入用户ID
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + ttl))
                 .signWith(Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes()))
                 .compact();
     }
+
 
     // 解析令牌获取用户名
     public String getUsernameFromToken(String token) {
