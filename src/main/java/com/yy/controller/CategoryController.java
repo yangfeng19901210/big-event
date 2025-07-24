@@ -6,6 +6,7 @@ import com.yy.vo.in.UpdateCategoryInVO;
 import com.yy.vo.out.CategoryListOutVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +33,7 @@ public class CategoryController {
      * @author: yangfeng
      * @date: 2025/6/30 11:22
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Boolean addCategory(@Valid @RequestBody AddCategoryInVO vo){
         return categoryService.addCategory(vo);
@@ -43,6 +45,7 @@ public class CategoryController {
      * @author: yangfeng
      * @date: 2025/7/1 15:46
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
     public List<CategoryListOutVO> queryCurrentUserCategory() {
         return categoryService.getAllCategoryList();
@@ -54,6 +57,7 @@ public class CategoryController {
      * @author: yangfeng
      * @date: 2025/7/4 16:43
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public Boolean update(@Valid @RequestBody UpdateCategoryInVO vo) {
         return categoryService.updateCategory(vo);
@@ -66,6 +70,7 @@ public class CategoryController {
      * @author: yangfeng
      * @date: 2025/7/7 9:06
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping
     public Boolean deleteCategory(Integer id) {
         return categoryService.removeById(id);

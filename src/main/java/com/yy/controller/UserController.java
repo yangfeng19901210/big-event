@@ -68,6 +68,7 @@ public class UserController {
             Authentication auth = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
+            //将当前用户的安全认证信息（Authentication对象）存储到安全上下文中，供后续授权流程全局调用
             SecurityContextHolder.getContext().setAuthentication(auth);
             UserDetails userDetails = (UserDetails) auth.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()

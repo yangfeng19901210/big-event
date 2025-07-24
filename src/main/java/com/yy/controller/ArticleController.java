@@ -36,6 +36,7 @@ public class ArticleController {
      * @author: yangfeng
      * @date: 2025/7/7 9:41
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public Boolean add(@RequestBody @Valid AddArticleInVO vo){
         return articleService.add(vo);
@@ -47,6 +48,7 @@ public class ArticleController {
      * @author: yangfeng
      * @date: 2025/7/7 13:52
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public Boolean update(@RequestBody @Valid UpdateArticleInVO vo){
         return articleService.updateArticle(vo);
@@ -70,6 +72,7 @@ public class ArticleController {
      * @author: yangfeng
      * @date: 2025/7/7 14:07
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping
     public Boolean delete(Integer id) {
         return articleService.removeById(id);
@@ -81,6 +84,7 @@ public class ArticleController {
      * @author: yangfeng
      * @date: 2025/7/7 14:28
      **/
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/getPageData")
     public PageDTO<ArticlePageOutVO> getPageData(@RequestBody @Valid ArticlePageQueryVO vo){
         return articleService.getPageData(vo);
