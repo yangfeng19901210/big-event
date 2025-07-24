@@ -16,11 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
@@ -92,10 +94,12 @@ public class UserController {
     * @param
     * @return com.yy.pojo.User
     */
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/userInfo")
-    public User getUserInfo(){
-        Long userId = BaseStorage.getUserId();
-        return userService.getById(userId);
+    public User getUserInfo(Authentication authentication){
+        CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+//        Long userId = BaseStorage.getUserId();
+        return userService.getById(userDetails.getId());
     }
     /**
     * @description 更新用户信息

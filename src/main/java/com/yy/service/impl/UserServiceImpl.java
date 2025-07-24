@@ -2,6 +2,7 @@ package com.yy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yy.common.BaseStorage;
+import com.yy.pojo.CustomUser;
 import com.yy.pojo.SysUserRole;
 import com.yy.pojo.User;
 import com.yy.service.SysUserRoleService;
@@ -14,6 +15,9 @@ import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 import jakarta.annotation.Resource;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -63,8 +67,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public Boolean updateAvatar(String avatarUrl) {
+        SecurityContext context = SecurityContextHolder.getContext();
+
+        // 2. 获取 Authentication 对象
+        Authentication authentication = context.getAuthentication();
+        CustomUser userDetails = (CustomUser) authentication.getPrincipal();
         User u = new User();
-        u.setId(BaseStorage.getUserId());
+        u.setId(userDetails.getId());
         u.setUserPic(avatarUrl);
         return updateById(u);
     }
@@ -73,8 +82,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
     public Boolean updatePwd(UpdatePwdInVO vo) {
         AssertTool.isFalse(ObjectTool.equals(vo.getOldPwd(),vo.getNewPwd()),"新密码不可和原始密码一样");
         AssertTool.isTrue(ObjectTool.equals(vo.getNewPwd(),vo.getRePwd()),"新密码和确认密码不一致");
-        Long userId = BaseStorage.getUserId();
-        User user = getById(userId);
+        //通过上下文获取用户信息
+        SecurityContext context = SecurityContextHolder.getContext();
+
+        // 2. 获取 Authentication 对象
+        Authentication authentication = context.getAuthentication();
+        CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+        User user = getById(userDetails.getId());
         AssertTool.notNull(user,"用户不存在");
         AssertTool.isTrue(ObjectTool.equals(user.getPassword(),Md5Util.getMD5String(vo.getOldPwd())),"原始密码错误");
         user.setPassword(Md5Util.getMD5String(vo.getNewPwd()));
