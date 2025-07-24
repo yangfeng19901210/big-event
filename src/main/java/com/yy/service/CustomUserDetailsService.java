@@ -41,6 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<SysPermission> permissions = userMapper.getPermByUserName(username);
         List<SysRole> roles = sysRoleService.getRolesByUserId(user.getId());
         return new CustomUser(
+                user.getId(),
                 user.getUsername(),
                 user.getPassword(), // 数据库密码需已加密
                 permissions.stream().map(SysPermission::getPermCode).toList(),

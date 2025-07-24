@@ -31,4 +31,6 @@ public interface BaseConstant {
     String TASK_ID = "taskId";
     //用户token
     String USER_TOKEN = "userToken:";
+
+    String TOKEN_PREFIX = "Bearer ";
 }

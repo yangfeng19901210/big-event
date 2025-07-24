@@ -55,7 +55,8 @@ public class CustomUser extends User implements UserDetails {
     public CustomUser() {
     }
 
-    public CustomUser(String username,String password,List<String> permissions, List<String> roles) {
+    public CustomUser(Long userId,String username,String password,List<String> permissions, List<String> roles) {
+        this.setId(userId);
         this.setUsername(username);
         this.setPassword(password);
         this.permissions = permissions;

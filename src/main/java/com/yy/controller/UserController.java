@@ -3,6 +3,7 @@ package com.yy.controller;
 import com.yy.common.BaseStorage;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;
+import com.yy.pojo.CustomUser;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
@@ -70,16 +71,16 @@ public class UserController {
             );
             //将当前用户的安全认证信息（Authentication对象）存储到安全上下文中，供后续授权流程全局调用
             SecurityContextHolder.getContext().setAuthentication(auth);
-            UserDetails userDetails = (UserDetails) auth.getPrincipal();
+            CustomUser userDetails = (CustomUser) auth.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .toList();
-            String token = jwtUtil.generateToken(userDetails.getUsername(), roles);
+            String token = jwtUtil.generateToken(userDetails.getUsername(), roles,1000*60*60*24);
             //把token存储到redis中
             ValueOperations<String, String> operations = stringRedisTemplate.opsForValue();
             //token放到redis中，过期时间设置为2小时
-            operations.set(BaseConstant.USER_TOKEN+username,token,24, TimeUnit.HOURS);
-            return token;
+            operations.set(BaseConstant.USER_TOKEN+userDetails.getId(),token,24, TimeUnit.HOURS);
+            return BaseConstant.TOKEN_PREFIX+token;
         } catch (AuthenticationException e) {
             throw e;
         }
