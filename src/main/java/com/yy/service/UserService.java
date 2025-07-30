@@ -6,6 +6,7 @@ import com.yy.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
+import com.yy.vo.out.RoleSelectListOutVO;
 import com.yy.vo.out.UserPageOutVO;
 import com.yy.vo.query.UserPageQueryVO;
 import jakarta.validation.Valid;
@@ -78,4 +79,5 @@ public interface UserService extends IService<User> {
      * @date: 2025/7/30 9:01
      **/
     PageDTO<UserPageOutVO> getUserPageData(@Valid UserPageQueryVO vo);
+
 }

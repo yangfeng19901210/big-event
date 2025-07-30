@@ -13,9 +13,11 @@ import com.yy.mapper.UserMapper;
 import com.yy.utils.Md5Util;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
+import com.yy.vo.out.RoleSelectListOutVO;
 import com.yy.vo.out.UserPageOutVO;
 import com.yy.vo.query.UserPageQueryVO;
 import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
+import io.gitee.loulan_yxq.owner.core.collection.CollTool;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
 import io.gitee.loulan_yxq.owner.core.tool.StrTool;
@@ -27,6 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -119,6 +122,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
                 .page(vo.toMpPageDefaultSortByCreateTimeDesc());
         return PageDTO.of(page, UserPageOutVO.class);
     }
+
 
 }
 

@@ -28,5 +28,13 @@ public interface SysRoleService extends IService<SysRole> {
      * @date: 2025/7/18 11:18
      **/
     List<SysRole> getRolesByUserId(Long userId);
+    /**
+     * 获取所有角色信息
+     * @param
+     * @Return: java.util.List<com.yy.pojo.SysRole>
+     * @author: yangfeng
+     * @date: 2025/7/30 15:11
+     **/
+    List<SysRole> getAllRoles();
 
 }

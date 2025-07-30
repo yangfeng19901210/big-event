@@ -43,10 +43,14 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
         List<SysUserRole> userRoleList = sysUserRoleService.lambdaQuery().eq(SysUserRole::getUserId, userId).list();
         if(CollTool.isNotEmpty(userRoleList)){
             List<Long> roleIds = userRoleList.stream().map(SysUserRole::getRoleId).toList();
-            List<SysRole> roleList = lambdaQuery().in(SysRole::getId, roleIds).list();
-            return roleList;
+            return lambdaQuery().in(SysRole::getId, roleIds).list();
         }
         return List.of();
+    }
+
+    @Override
+    public List<SysRole> getAllRoles() {
+        return list();
     }
 }
 
