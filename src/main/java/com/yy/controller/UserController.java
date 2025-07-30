@@ -1,6 +1,7 @@
 package com.yy.controller;
 
-import com.yy.common.BaseStorage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yy.common.entity.PageDTO;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;
 import com.yy.pojo.CustomUser;
@@ -9,7 +10,10 @@ import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
+import com.yy.vo.out.UserPageOutVO;
+import com.yy.vo.query.UserPageQueryVO;
 import jakarta.annotation.Resource;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,15 +26,19 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+/**
+ * 用户controller
+ * @ClassName UserController
+ * @Author yangfeng
+ * @Date 2025/7/30 8:45
+ * @Version 1.0
+ */
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -146,6 +154,16 @@ public class UserController {
         //删除redis中的token信息
         CustomUser userDetails = (CustomUser) authentication.getPrincipal();
         return stringRedisTemplate.delete(BaseConstant.USER_TOKEN+userDetails.getUsername());
-
+    }
+    /**
+     * 分页获取用户列表
+     * @param vo
+     * @Return: com.baomidou.mybatisplus.extension.plugins.pagination.Page<com.yy.vo.out.UserPageOutVO>
+     * @author: yangfeng
+     * @date: 2025/7/30 9:00
+     **/
+    @PostMapping("/getUserPageData")
+    public PageDTO<UserPageOutVO> getUserPageData(@RequestBody @Valid UserPageQueryVO vo){
+        return userService.getUserPageData(vo);
     }
 }

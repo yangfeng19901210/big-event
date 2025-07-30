@@ -1,7 +1,9 @@
 package com.yy.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yy.common.BaseStorage;
+import com.yy.common.entity.PageDTO;
 import com.yy.pojo.CustomUser;
 import com.yy.pojo.SysUserRole;
 import com.yy.pojo.User;
@@ -11,9 +13,12 @@ import com.yy.mapper.UserMapper;
 import com.yy.utils.Md5Util;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
+import com.yy.vo.out.UserPageOutVO;
+import com.yy.vo.query.UserPageQueryVO;
 import io.gitee.loulan_yxq.owner.core.bean.BeanTool;
 import io.gitee.loulan_yxq.owner.core.tool.AssertTool;
 import io.gitee.loulan_yxq.owner.core.tool.ObjectTool;
+import io.gitee.loulan_yxq.owner.core.tool.StrTool;
 import jakarta.annotation.Resource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -104,6 +109,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return sysUserRole;
         }).toList();
         return sysUserRoleService.saveBatch(userRoles);
+    }
+
+    @Override
+    public PageDTO<UserPageOutVO> getUserPageData(UserPageQueryVO vo) {
+        Page<User> page = lambdaQuery()
+                .like(StrTool.isNotBlank(vo.getUserName()), User::getUsername, vo.getUserName())
+                .like(StrTool.isNotBlank(vo.getNickName()), User::getNickname, vo.getNickName())
+                .page(vo.toMpPageDefaultSortByCreateTimeDesc());
+        return PageDTO.of(page, UserPageOutVO.class);
     }
 
 }

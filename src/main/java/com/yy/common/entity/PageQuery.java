@@ -26,6 +26,9 @@ public class PageQuery {
      */
     private Boolean isAsc;
     public <T> Page<T> toMpPage(OrderItem... orders){
+        //设置分页默认值
+        pageNo = null==pageNo? 1L: pageNo;
+        pageSize = null==pageSize? 1L: pageSize;
         // 1.分页条件
         Page<T> p = Page.of(pageNo, pageSize);
         // 2.排序条件

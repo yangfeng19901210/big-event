@@ -1,9 +1,14 @@
 package com.yy.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yy.common.entity.PageDTO;
 import com.yy.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
+import com.yy.vo.out.UserPageOutVO;
+import com.yy.vo.query.UserPageQueryVO;
+import jakarta.validation.Valid;
 import org.hibernate.validator.constraints.URL;
 
 import java.util.List;
@@ -65,4 +70,12 @@ public interface UserService extends IService<User> {
      * @date: 2025/7/18 9:20
      **/
     boolean addRolesToUser(Long userId, List<Long> roleIds);
+    /**
+     * 分页获取用户列表
+     * @param vo
+     * @Return: com.baomidou.mybatisplus.extension.plugins.pagination.Page<com.yy.vo.out.UserPageOutVO>
+     * @author: yangfeng
+     * @date: 2025/7/30 9:01
+     **/
+    PageDTO<UserPageOutVO> getUserPageData(@Valid UserPageQueryVO vo);
 }
