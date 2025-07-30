@@ -27,5 +27,15 @@ class SysRoleServiceImplTest {
     void addPermsToRole(){
         sysRoleService.addPerms(3L, List.of(1L, 2L, 3L));
     }
+    @Test
+    void selectAllRoles() {
+        List<SysRole> sysRoles = sysRoleService.getAllRoles();
+        sysRoles.forEach(System.out::println);
+    }
+    @Test
+    void getRolesByUserId(){
+        List<SysRole> sysRoles = sysRoleService.getRolesByUserId(6L);
+        sysRoles.forEach(System.out::println);
+    }
 
 }
