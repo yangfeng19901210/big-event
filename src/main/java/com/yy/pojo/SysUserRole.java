@@ -28,6 +28,6 @@ public class SysUserRole extends BaseEntity {
     /**
      * 删除标识，默认-1未删除，已删除设置为null
      */
-    @TableLogic(value = "-1",delval = "null")
+    @TableLogic(value = "-1", delval = "UNIX_TIMESTAMP() * 1000")
     private Integer delFlag;
 }

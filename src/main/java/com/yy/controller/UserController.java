@@ -1,6 +1,5 @@
 package com.yy.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yy.common.entity.PageDTO;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;

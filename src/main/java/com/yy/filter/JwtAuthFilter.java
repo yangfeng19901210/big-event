@@ -79,6 +79,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         } catch (AssertException asse) {
             handlerExceptionResolver.resolveException(request, response, null, asse);
         } catch (Exception e) {
+            log.error("错误",e);
             //http响应状态码为401
 //            throw new AuthException("用户未登录",e);
             //不放行
