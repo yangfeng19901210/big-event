@@ -70,7 +70,7 @@ public interface UserService extends IService<User> {
      * @author: yangfeng
      * @date: 2025/7/18 9:20
      **/
-    boolean addRolesToUser(Long userId, List<Long> roleIds);
+    boolean setRolesToUser(Long userId, List<Long> roleIds);
     /**
      * 分页获取用户列表
      * @param vo

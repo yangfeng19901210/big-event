@@ -1,5 +1,6 @@
 package com.yy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yy.common.BaseStorage;
@@ -27,6 +28,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -102,9 +104,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setPassword(passwordEncoder.encode(vo.getNewPwd()));
         return updateById(user);
     }
-
+    @Transactional
     @Override
-    public boolean addRolesToUser(Long userId, List<Long> roleIds) {
+    public boolean setRolesToUser(Long userId, List<Long> roleIds) {
+        //删除用户之前拥有的角色
+        LambdaQueryWrapper<SysUserRole> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUserRole::getUserId, userId);
+        sysUserRoleService.remove(queryWrapper);
         List<SysUserRole> userRoles = roleIds.stream().map(roleId -> {
             SysUserRole sysUserRole = new SysUserRole();
             sysUserRole.setUserId(userId);

@@ -16,8 +16,8 @@ class SysRoleServiceImplTest {
     @Test
     void addRole(){
         SysRole sysRole = new SysRole();
-        sysRole.setRoleCode("admin");
-        sysRole.setRoleName("管理员");
+        sysRole.setRoleCode("hr");
+        sysRole.setRoleName("人事");
         sysRoleService.save(sysRole);
     }
     /**

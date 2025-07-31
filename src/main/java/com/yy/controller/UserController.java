@@ -8,6 +8,7 @@ import com.yy.pojo.CustomUser;
 import com.yy.pojo.User;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
+import com.yy.vo.in.AddRolesToUserInVO;
 import com.yy.vo.in.UpUserInVO;
 import com.yy.vo.in.UpdatePwdInVO;
 import com.yy.vo.out.UserPageOutVO;
@@ -165,5 +166,16 @@ public class UserController {
     @PostMapping("/getUserPageData")
     public PageDTO<UserPageOutVO> getUserPageData(@RequestBody @Valid UserPageQueryVO vo){
         return userService.getUserPageData(vo);
+    }
+    /**
+     * 给用户设置角色
+     * @param vo
+     * @Return: java.lang.Boolean
+     * @author: yangfeng
+     * @date: 2025/7/31 10:26
+     **/
+    @PostMapping("/setRolesToUser")
+    public Boolean setRolesToUser(@RequestBody AddRolesToUserInVO vo) {
+        return userService.setRolesToUser(vo.getUserId(), vo.getRoleIds());
     }
 }
