@@ -4,7 +4,9 @@ import com.yy.common.entity.PageDTO;
 import com.yy.common.response.Result;
 import com.yy.config.BaseConstant;
 import com.yy.pojo.CustomUser;
+import com.yy.pojo.SysRole;
 import com.yy.pojo.User;
+import com.yy.service.SysRoleService;
 import com.yy.service.UserService;
 import com.yy.utils.JwtUtil;
 import com.yy.vo.in.AddRolesToUserInVO;
@@ -52,6 +54,8 @@ public class UserController {
     private AuthenticationManager authenticationManager;
     @Resource
     private JwtUtil jwtUtil;
+
+    private final SysRoleService sysRoleService;
     /**
      * 用户注册
      * @param username
@@ -176,5 +180,17 @@ public class UserController {
     @PostMapping("/setRolesToUser")
     public Boolean setRolesToUser(@RequestBody AddRolesToUserInVO vo) {
         return userService.setRolesToUser(vo.getUserId(), vo.getRoleIds());
+    }
+    /**
+     * 获取当前登录用户角色信息
+     * @param authentication
+     * @Return: java.util.List<com.yy.pojo.SysRole>
+     * @author: yangfeng
+     * @date: 2025/7/31 13:49
+     **/
+    @GetMapping("/getCurrentUserRoles")
+    public List<SysRole> getCurrentUserRoles(Authentication authentication) {
+        CustomUser userDetails = (CustomUser) authentication.getPrincipal();
+        return sysRoleService.getRolesByUserId(userDetails.getId());
     }
 }
