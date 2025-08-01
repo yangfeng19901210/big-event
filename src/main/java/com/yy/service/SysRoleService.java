@@ -1,7 +1,11 @@
 package com.yy.service;
 
+import com.yy.common.entity.PageDTO;
 import com.yy.pojo.SysRole;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.yy.vo.out.RolePageOutVO;
+import com.yy.vo.query.RolePageQueryVO;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -36,5 +40,12 @@ public interface SysRoleService extends IService<SysRole> {
      * @date: 2025/7/30 15:11
      **/
     List<SysRole> getAllRoles();
-
+    /**
+     * 分页获取角色列表
+     * @param vo
+     * @Return: com.yy.common.entity.PageDTO<com.yy.vo.out.RolePageOutVO>
+     * @author: yangfeng
+     * @date: 2025/8/1 9:57
+     **/
+    PageDTO<RolePageOutVO> getRolePageData(@Valid RolePageQueryVO vo);
 }

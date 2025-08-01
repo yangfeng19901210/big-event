@@ -1,6 +1,7 @@
 package com.yy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yy.common.entity.PageDTO;
 import com.yy.pojo.SysRole;
 import com.yy.pojo.SysRolePerm;
 import com.yy.pojo.SysUserRole;
@@ -8,6 +9,8 @@ import com.yy.service.SysRolePermService;
 import com.yy.service.SysRoleService;
 import com.yy.mapper.SysRoleMapper;
 import com.yy.service.SysUserRoleService;
+import com.yy.vo.out.RolePageOutVO;
+import com.yy.vo.query.RolePageQueryVO;
 import io.gitee.loulan_yxq.owner.core.collection.CollTool;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -51,6 +54,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole>
     @Override
     public List<SysRole> getAllRoles() {
         return list();
+    }
+
+    @Override
+    public PageDTO<RolePageOutVO> getRolePageData(RolePageQueryVO vo) {
+        return null;
     }
 }
 

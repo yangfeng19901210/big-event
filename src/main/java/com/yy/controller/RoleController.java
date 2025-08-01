@@ -1,17 +1,18 @@
 package com.yy.controller;
 
+import com.yy.common.entity.PageDTO;
 import com.yy.pojo.CustomUser;
 import com.yy.pojo.SysRole;
 import com.yy.service.SysRoleService;
+import com.yy.vo.out.RolePageOutVO;
+import com.yy.vo.query.RolePageQueryVO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -51,5 +52,16 @@ public class RoleController {
     @GetMapping("/getUserRoles/{userId}")
     public List<SysRole> getUserRoles(@PathVariable Long userId) {
         return sysRoleService.getRolesByUserId(userId);
+    }
+    /**
+     * 分页获取角色列表
+     * @param vo
+     * @Return: com.yy.common.entity.PageDTO<com.yy.vo.out.RolePageOutVO>
+     * @author: yangfeng
+     * @date: 2025/8/1 9:46
+     **/
+    @PostMapping("/getRolePageData")
+    public PageDTO<RolePageOutVO> getRolePageData(@RequestBody @Valid RolePageQueryVO vo) {
+        return sysRoleService.getRolePageData(vo);
     }
 }
