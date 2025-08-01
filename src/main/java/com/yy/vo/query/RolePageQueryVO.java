@@ -13,4 +13,13 @@ import lombok.Data;
  */
 @Data
 public class RolePageQueryVO extends PageQuery {
+    /**
+     * 角色code
+     */
+    private String roleCode;
+
+    /**
+     * 角色名称
+     */
+    private String roleName;
 }
