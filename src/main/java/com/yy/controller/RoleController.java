@@ -1,7 +1,6 @@
 package com.yy.controller;
 
 import com.yy.common.entity.PageDTO;
-import com.yy.pojo.CustomUser;
 import com.yy.pojo.SysRole;
 import com.yy.service.SysRoleService;
 import com.yy.vo.out.RolePageOutVO;
@@ -9,8 +8,6 @@ import com.yy.vo.query.RolePageQueryVO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
