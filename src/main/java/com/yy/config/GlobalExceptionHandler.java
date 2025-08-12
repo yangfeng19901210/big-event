@@ -22,8 +22,8 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     // 主动排除 AccessDeniedException 和 AuthenticationException
     @ExceptionHandler({AccessDeniedException.class})
-    public void rethrowSecurityException() throws Exception {
-        throw new Exception(); // 重新抛出，交给 ExceptionTranslationFilter 处理
+    public void rethrowSecurityException(AccessDeniedException ade) throws Exception {
+        throw ade; // 重新抛出，交给 ExceptionTranslationFilter 处理
     }
     /**
      * 处理常见异常

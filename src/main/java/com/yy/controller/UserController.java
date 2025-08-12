@@ -106,7 +106,7 @@ public class UserController {
     * @param
     * @return com.yy.pojo.User
     */
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/userInfo")
     public User getUserInfo(Authentication authentication){
         CustomUser userDetails = (CustomUser) authentication.getPrincipal();

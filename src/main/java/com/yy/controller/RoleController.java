@@ -38,7 +38,7 @@ public class RoleController {
      * @date: 2025/7/30 15:48
      **/
     @GetMapping("/getAllRoles")
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public List<SysRole> getAllRoles() {
         return sysRoleService.getAllRoles();
     }
