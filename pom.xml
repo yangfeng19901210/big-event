@@ -68,6 +68,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.22.1</version>
+        </dependency>
         <!--java-jwt坐标-->
 <!--        <dependency>-->
 <!--            <groupId>com.auth0</groupId>-->
